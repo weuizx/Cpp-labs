@@ -1,0 +1,2 @@
+C:\MinGW\bin\ar.exe qc libdialog.a CMakeFiles/dialog.dir/src/dialog.cpp.obj
+C:\MinGW\bin\ranlib.exe libdialog.a

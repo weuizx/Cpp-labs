@@ -1,0 +1,5 @@
+C:/Users/Alexandr/Desktop/C++/Lab1/c/build/CMakeFiles/io.dir
+C:/Users/Alexandr/Desktop/C++/Lab1/c/build/CMakeFiles/html.dir
+C:/Users/Alexandr/Desktop/C++/Lab1/c/build/CMakeFiles/main.dir
+C:/Users/Alexandr/Desktop/C++/Lab1/c/build/CMakeFiles/edit_cache.dir
+C:/Users/Alexandr/Desktop/C++/Lab1/c/build/CMakeFiles/rebuild_cache.dir
