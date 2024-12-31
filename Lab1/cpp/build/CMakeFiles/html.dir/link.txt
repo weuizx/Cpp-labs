@@ -1,2 +1,0 @@
-C:\MinGW\bin\ar.exe qc libhtml.a CMakeFiles/html.dir/src/html.cpp.obj
-C:\MinGW\bin\ranlib.exe libhtml.a

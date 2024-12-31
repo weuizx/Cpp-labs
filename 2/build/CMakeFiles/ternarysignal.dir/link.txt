@@ -1,0 +1,2 @@
+C:\mingw64\bin\ar.exe qc libternarysignal.a CMakeFiles/ternarysignal.dir/src/main/ternarysignal.cpp.obj
+C:\mingw64\bin\ranlib.exe libternarysignal.a

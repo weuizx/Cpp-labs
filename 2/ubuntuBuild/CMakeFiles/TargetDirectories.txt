@@ -1,0 +1,8 @@
+/mnt/c/Users/Alexandr/Desktop/oop2024/2/ubuntuBuild/CMakeFiles/util.dir
+/mnt/c/Users/Alexandr/Desktop/oop2024/2/ubuntuBuild/CMakeFiles/ternarysignal.dir
+/mnt/c/Users/Alexandr/Desktop/oop2024/2/ubuntuBuild/CMakeFiles/ternaryvector.dir
+/mnt/c/Users/Alexandr/Desktop/oop2024/2/ubuntuBuild/CMakeFiles/dialog.dir
+/mnt/c/Users/Alexandr/Desktop/oop2024/2/ubuntuBuild/CMakeFiles/MyTests.dir
+/mnt/c/Users/Alexandr/Desktop/oop2024/2/ubuntuBuild/CMakeFiles/main.dir
+/mnt/c/Users/Alexandr/Desktop/oop2024/2/ubuntuBuild/CMakeFiles/edit_cache.dir
+/mnt/c/Users/Alexandr/Desktop/oop2024/2/ubuntuBuild/CMakeFiles/rebuild_cache.dir

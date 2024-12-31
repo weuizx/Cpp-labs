@@ -1,0 +1,2 @@
+/usr/bin/ar qc libternarysignal.a CMakeFiles/ternarysignal.dir/src/main/ternarysignal.cpp.o
+/usr/bin/ranlib libternarysignal.a

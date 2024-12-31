@@ -1,0 +1,2 @@
+C:\mingw64\bin\ar.exe qc libhtml.a CMakeFiles/html.dir/src/html.cpp.obj
+C:\mingw64\bin\ranlib.exe libhtml.a

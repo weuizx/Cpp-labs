@@ -1,0 +1,6 @@
+/mnt/c/Users/Alexandr/Desktop/OOP/Lab1/cpp/ubuntuBuild/CMakeFiles/rebuild_cache.dir
+/mnt/c/Users/Alexandr/Desktop/OOP/Lab1/cpp/ubuntuBuild/CMakeFiles/dialog.dir
+/mnt/c/Users/Alexandr/Desktop/OOP/Lab1/cpp/ubuntuBuild/CMakeFiles/io.dir
+/mnt/c/Users/Alexandr/Desktop/OOP/Lab1/cpp/ubuntuBuild/CMakeFiles/edit_cache.dir
+/mnt/c/Users/Alexandr/Desktop/OOP/Lab1/cpp/ubuntuBuild/CMakeFiles/main.dir
+/mnt/c/Users/Alexandr/Desktop/OOP/Lab1/cpp/ubuntuBuild/CMakeFiles/html.dir

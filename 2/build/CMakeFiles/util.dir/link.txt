@@ -1,0 +1,2 @@
+C:\mingw64\bin\ar.exe qc libutil.a CMakeFiles/util.dir/src/main/util.cpp.obj
+C:\mingw64\bin\ranlib.exe libutil.a

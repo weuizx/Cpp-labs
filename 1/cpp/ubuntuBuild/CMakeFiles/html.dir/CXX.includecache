@@ -1,0 +1,24 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/mnt/c/Users/Alexandr/Desktop/OOP/Lab1/cpp/src/html.cpp
+html.h
+/mnt/c/Users/Alexandr/Desktop/OOP/Lab1/cpp/src/html.h
+
+/mnt/c/Users/Alexandr/Desktop/OOP/Lab1/cpp/src/html.h
+iostream
+-
+stdexcept
+-
+vector
+-
+fstream
+-
+string
+-
+

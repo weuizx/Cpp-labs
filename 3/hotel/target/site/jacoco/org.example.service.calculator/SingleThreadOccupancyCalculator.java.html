@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ru"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SingleThreadOccupancyCalculator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">hotel</a> &gt; <a href="index.source.html" class="el_package">org.example.service.calculator</a> &gt; <span class="el_source">SingleThreadOccupancyCalculator.java</span></div><h1>SingleThreadOccupancyCalculator.java</h1><pre class="source lang-java linenums">package org.example.service.calculator;
+
+import org.example.room.Room;
+
+import java.util.Iterator;
+import java.util.Map;
+
+/**
+ * Класс для расчета занятости номеров с использованием однопоточности.
+ * Этот класс реализует интерфейс {@link OccupancyCalculator} и выполняет расчёт занятости
+ * всех номеров в гостинице в одном потоке, обходя все номера и суммируя количество гостей и мест.
+ */
+public class SingleThreadOccupancyCalculator implements OccupancyCalculator {
+
+    private final Map&lt;Integer, Room&gt; ALL_ROOMS;
+
+    /**
+     * Конструктор для создания экземпляра калькулятора с однопоточной обработкой занятости.
+     *
+     * @param ALL_ROOMS Карта с номерами всех типов.
+     */
+<span class="fc" id="L22">    public SingleThreadOccupancyCalculator(Map&lt;Integer, Room&gt; ALL_ROOMS) {</span>
+<span class="fc" id="L23">        this.ALL_ROOMS = ALL_ROOMS;</span>
+<span class="fc" id="L24">    }</span>
+
+    /**
+     * Метод для расчета текущей занятости всех номеров.
+     * Занятость вычисляется как отношение количества занятых мест к общему количеству мест в номерах.
+     * Метод выполняется в одном потоке.
+     *
+     * @return Занятость в виде числа с плавающей точкой от 0.0 до 1.0.
+     *         Например, если занято 50% мест, метод вернет 0.5.
+     */
+    @Override
+    public float getOccupancy() {
+<span class="fc" id="L36">        Iterator&lt;Room&gt; iterator = ALL_ROOMS.values().iterator();</span>
+<span class="fc" id="L37">        int numberOfGuests = 0;</span>
+<span class="fc" id="L38">        int numberOfBeds = 0;</span>
+
+<span class="fc bfc" id="L40" title="All 2 branches covered.">        while (iterator.hasNext()) {</span>
+<span class="fc" id="L41">            Room room = iterator.next();</span>
+<span class="fc" id="L42">            numberOfGuests += room.getNumberOfGuests();</span>
+<span class="fc" id="L43">            numberOfBeds += room.getRoomSize();</span>
+<span class="fc" id="L44">        }</span>
+
+<span class="fc bfc" id="L46" title="All 2 branches covered.">        return numberOfBeds == 0 ? 0 : (float) numberOfGuests / numberOfBeds;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

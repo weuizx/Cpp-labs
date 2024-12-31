@@ -1,0 +1,38 @@
+[
+{
+  "directory": "C:/Users/Alexandr/Desktop/oop2024/2/build",
+  "command": "C:\\mingw64\\bin\\c++.exe   -g -o CMakeFiles\\util.dir\\src\\main\\util.cpp.obj -c C:\\Users\\Alexandr\\Desktop\\oop2024\\2\\src\\main\\util.cpp",
+  "file": "C:/Users/Alexandr/Desktop/oop2024/2/src/main/util.cpp",
+  "output": "CMakeFiles/util.dir/src/main/util.cpp.obj"
+},
+{
+  "directory": "C:/Users/Alexandr/Desktop/oop2024/2/build",
+  "command": "C:\\mingw64\\bin\\c++.exe   -g -o CMakeFiles\\ternarysignal.dir\\src\\main\\ternarysignal.cpp.obj -c C:\\Users\\Alexandr\\Desktop\\oop2024\\2\\src\\main\\ternarysignal.cpp",
+  "file": "C:/Users/Alexandr/Desktop/oop2024/2/src/main/ternarysignal.cpp",
+  "output": "CMakeFiles/ternarysignal.dir/src/main/ternarysignal.cpp.obj"
+},
+{
+  "directory": "C:/Users/Alexandr/Desktop/oop2024/2/build",
+  "command": "C:\\mingw64\\bin\\c++.exe   -g -o CMakeFiles\\ternaryvector.dir\\src\\main\\ternaryvector.cpp.obj -c C:\\Users\\Alexandr\\Desktop\\oop2024\\2\\src\\main\\ternaryvector.cpp",
+  "file": "C:/Users/Alexandr/Desktop/oop2024/2/src/main/ternaryvector.cpp",
+  "output": "CMakeFiles/ternaryvector.dir/src/main/ternaryvector.cpp.obj"
+},
+{
+  "directory": "C:/Users/Alexandr/Desktop/oop2024/2/build",
+  "command": "C:\\mingw64\\bin\\c++.exe   -g -o CMakeFiles\\dialog.dir\\src\\main\\dialog.cpp.obj -c C:\\Users\\Alexandr\\Desktop\\oop2024\\2\\src\\main\\dialog.cpp",
+  "file": "C:/Users/Alexandr/Desktop/oop2024/2/src/main/dialog.cpp",
+  "output": "CMakeFiles/dialog.dir/src/main/dialog.cpp.obj"
+},
+{
+  "directory": "C:/Users/Alexandr/Desktop/oop2024/2/build",
+  "command": "C:\\mingw64\\bin\\c++.exe   -g -fprofile-arcs -ftest-coverage -o CMakeFiles\\MyTests.dir\\src\\test\\test_main.cpp.obj -c C:\\Users\\Alexandr\\Desktop\\oop2024\\2\\src\\test\\test_main.cpp",
+  "file": "C:/Users/Alexandr/Desktop/oop2024/2/src/test/test_main.cpp",
+  "output": "CMakeFiles/MyTests.dir/src/test/test_main.cpp.obj"
+},
+{
+  "directory": "C:/Users/Alexandr/Desktop/oop2024/2/build",
+  "command": "C:\\mingw64\\bin\\c++.exe   -g -fprofile-arcs -ftest-coverage -o CMakeFiles\\main.dir\\src\\main\\main.cpp.obj -c C:\\Users\\Alexandr\\Desktop\\oop2024\\2\\src\\main\\main.cpp",
+  "file": "C:/Users/Alexandr/Desktop/oop2024/2/src/main/main.cpp",
+  "output": "CMakeFiles/main.dir/src/main/main.cpp.obj"
+}
+]

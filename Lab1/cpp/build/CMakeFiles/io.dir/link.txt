@@ -1,2 +1,0 @@
-C:\MinGW\bin\ar.exe qc libio.a CMakeFiles/io.dir/src/io.cpp.obj
-C:\MinGW\bin\ranlib.exe libio.a

@@ -1,0 +1,32 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/mnt/c/Users/Alexandr/Desktop/OOP/Lab1/c/src/dialog.h
+
+/mnt/c/Users/Alexandr/Desktop/OOP/Lab1/c/src/html.h
+stddef.h
+-
+stdio.h
+-
+
+/mnt/c/Users/Alexandr/Desktop/OOP/Lab1/c/src/io.h
+stdio.h
+-
+stdlib.h
+-
+string.h
+-
+
+/mnt/c/Users/Alexandr/Desktop/OOP/Lab1/c/src/main.c
+html.h
+/mnt/c/Users/Alexandr/Desktop/OOP/Lab1/c/src/html.h
+io.h
+/mnt/c/Users/Alexandr/Desktop/OOP/Lab1/c/src/io.h
+dialog.h
+/mnt/c/Users/Alexandr/Desktop/OOP/Lab1/c/src/dialog.h
+

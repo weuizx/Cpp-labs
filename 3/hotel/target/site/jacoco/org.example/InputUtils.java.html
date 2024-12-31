@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ru"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>InputUtils.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">hotel</a> &gt; <a href="index.source.html" class="el_package">org.example</a> &gt; <span class="el_source">InputUtils.java</span></div><h1>InputUtils.java</h1><pre class="source lang-java linenums">package org.example;
+
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
+/**
+ * Утилитный класс для работы с пользовательским вводом.
+ * Этот класс содержит методы для чтения данных с консоли, включая полное имя пользователя и целые числа в пределах заданного диапазона.
+ * Методы автоматически обрабатывают ошибки ввода и повторно запрашивают ввод в случае неверных данных.
+ */
+<span class="nc" id="L11">public class InputUtils {</span>
+
+    /**
+     * Объект для считывания ввода с консоли.
+     */
+<span class="nc" id="L16">    private static final Scanner input = new Scanner(System.in);</span>
+
+    /**
+     * Читает полное имя пользователя с консоли.
+     * Метод ожидает, что имя будет введено в одной строке.
+     *
+     * @return Полное имя пользователя, введенное с консоли.
+     */
+    public static String readFullName() {
+        String fullName;
+<span class="nc" id="L26">        fullName = input.nextLine();</span>
+<span class="nc" id="L27">        return fullName;</span>
+    }
+
+    /**
+     * Читает целое число из консоли в пределах заданного диапазона.
+     * Если введенное число не входит в указанный диапазон или является недопустимым, метод повторяет запрос.
+     *
+     * @param start Начало диапазона (включительно).
+     * @param end   Конец диапазона (включительно).
+     * @return Введенное число, которое находится в пределах диапазона от start до end.
+     * @throws IllegalArgumentException если start больше или равен end.
+     */
+    public static int readIntInRange(int start, int end) {
+<span class="nc bnc" id="L40" title="All 2 branches missed.">        if (end &lt; start) {</span>
+<span class="nc" id="L41">            throw new IllegalArgumentException(&quot;start должен быть меньше end&quot;);</span>
+        }
+
+<span class="nc" id="L44">        int output = 0;</span>
+<span class="nc" id="L45">        boolean validInput = false;</span>
+
+<span class="nc bnc" id="L47" title="All 2 branches missed.">        while (!validInput) {</span>
+            try {
+<span class="nc" id="L49">                output = input.nextInt();</span>
+
+<span class="nc bnc" id="L51" title="All 4 branches missed.">                if (output &gt;= start &amp;&amp; output &lt;= end) {</span>
+<span class="nc" id="L52">                    validInput = true;</span>
+                } else {
+<span class="nc" id="L54">                    System.out.println(&quot;Значение должно быть в диапазоне [&quot; + start + &quot;, &quot; + end + &quot;]! Попробуйте еще раз!&quot;);</span>
+                }
+<span class="nc" id="L56">            } catch (InputMismatchException e) {</span>
+<span class="nc" id="L57">                System.out.println(&quot;Ошибка ввода! Попробуйте еще раз!&quot;);</span>
+<span class="nc" id="L58">                input.next();</span>
+<span class="nc" id="L59">            }</span>
+        }
+<span class="nc" id="L61">        input.nextLine();</span>
+
+<span class="nc" id="L63">        return output;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

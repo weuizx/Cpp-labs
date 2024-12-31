@@ -1,0 +1,2 @@
+/usr/bin/ar qc libdialog.a  CMakeFiles/dialog.dir/src/dialog.cpp.o
+/usr/bin/ranlib libdialog.a

@@ -1,0 +1,26 @@
+[
+{
+  "directory": "C:/Users/Alexandr/Desktop/oop2024/1/cpp/build",
+  "command": "C:\\mingw64\\bin\\c++.exe   -g -o CMakeFiles\\io.dir\\src\\io.cpp.obj -c C:\\Users\\Alexandr\\Desktop\\oop2024\\1\\cpp\\src\\io.cpp",
+  "file": "C:/Users/Alexandr/Desktop/oop2024/1/cpp/src/io.cpp",
+  "output": "CMakeFiles/io.dir/src/io.cpp.obj"
+},
+{
+  "directory": "C:/Users/Alexandr/Desktop/oop2024/1/cpp/build",
+  "command": "C:\\mingw64\\bin\\c++.exe   -g -o CMakeFiles\\html.dir\\src\\html.cpp.obj -c C:\\Users\\Alexandr\\Desktop\\oop2024\\1\\cpp\\src\\html.cpp",
+  "file": "C:/Users/Alexandr/Desktop/oop2024/1/cpp/src/html.cpp",
+  "output": "CMakeFiles/html.dir/src/html.cpp.obj"
+},
+{
+  "directory": "C:/Users/Alexandr/Desktop/oop2024/1/cpp/build",
+  "command": "C:\\mingw64\\bin\\c++.exe   -g -o CMakeFiles\\dialog.dir\\src\\dialog.cpp.obj -c C:\\Users\\Alexandr\\Desktop\\oop2024\\1\\cpp\\src\\dialog.cpp",
+  "file": "C:/Users/Alexandr/Desktop/oop2024/1/cpp/src/dialog.cpp",
+  "output": "CMakeFiles/dialog.dir/src/dialog.cpp.obj"
+},
+{
+  "directory": "C:/Users/Alexandr/Desktop/oop2024/1/cpp/build",
+  "command": "C:\\mingw64\\bin\\c++.exe   -g -o CMakeFiles\\main.dir\\src\\main.cpp.obj -c C:\\Users\\Alexandr\\Desktop\\oop2024\\1\\cpp\\src\\main.cpp",
+  "file": "C:/Users/Alexandr/Desktop/oop2024/1/cpp/src/main.cpp",
+  "output": "CMakeFiles/main.dir/src/main.cpp.obj"
+}
+]

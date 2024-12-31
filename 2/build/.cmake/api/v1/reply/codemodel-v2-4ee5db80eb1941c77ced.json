@@ -1,0 +1,105 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"jsonFile" : "directory-.-Debug-d0094a50bb2071803777.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.10"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "Lab2",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "MyTests::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-MyTests-Debug-5eae8a02f35a5212c070.json",
+					"name" : "MyTests",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "dialog::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-dialog-Debug-90ab4196d41383a94a1f.json",
+					"name" : "dialog",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "main::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-main-Debug-c1f833c0252079149aef.json",
+					"name" : "main",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ternarysignal::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ternarysignal-Debug-f0a9c629e96e4adf0805.json",
+					"name" : "ternarysignal",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ternaryvector::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ternaryvector-Debug-7eff2bc4cc042162692d.json",
+					"name" : "ternaryvector",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "util::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-util-Debug-b4da39f44911723f825d.json",
+					"name" : "util",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "C:/Users/Alexandr/Desktop/oop2024/2/build",
+		"source" : "C:/Users/Alexandr/Desktop/oop2024/2"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 7
+	}
+}

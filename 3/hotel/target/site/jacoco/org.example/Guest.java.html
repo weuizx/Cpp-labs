@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ru"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Guest.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">hotel</a> &gt; <a href="index.source.html" class="el_package">org.example</a> &gt; <span class="el_source">Guest.java</span></div><h1>Guest.java</h1><pre class="source lang-java linenums">package org.example;
+
+import java.util.Date;
+
+/**
+ * Класс, представляющий гостя гостиницы.
+ * Этот класс содержит информацию о госте, включая его уникальный идентификатор,
+ * имя, номер комнаты, дату заселения и продолжительность пребывания.
+ */
+public class Guest {
+
+    /**
+     * Счётчик для генерации уникальных идентификаторов для каждого гостя.
+     */
+<span class="fc" id="L15">    private static int idCounter = 0;</span>
+
+    /**
+     * Уникальный идентификатор гостя.
+     */
+    private final int guestId;
+
+    /**
+     * Полное имя гостя.
+     */
+    private final String fullName;
+
+    /**
+     * Идентификатор номера, в котором размещается гость.
+     */
+    private int roomId;
+
+    /**
+     * Дата заселения гостя.
+     */
+    private final Date checkInDate;
+
+    /**
+     * Продолжительность пребывания гостя в днях.
+     */
+    private final int daysOfStay;
+
+    /**
+     * Конструктор для создания нового объекта {@link Guest}.
+     * Устанавливает уникальный идентификатор, имя гостя, дату заселения и продолжительность пребывания.
+     *
+     * @param daysOfStay Продолжительность пребывания гостя в днях.
+     * @param fullName Полное имя гостя.
+     */
+<span class="fc" id="L49">    public Guest(int daysOfStay, String fullName) {</span>
+<span class="fc" id="L50">        this.guestId = idCounter++;</span>
+<span class="fc" id="L51">        this.fullName = fullName;</span>
+<span class="fc" id="L52">        this.checkInDate = new Date();</span>
+<span class="fc" id="L53">        this.daysOfStay = daysOfStay;</span>
+<span class="fc" id="L54">    }</span>
+
+    /**
+     * Возвращает уникальный идентификатор гостя.
+     *
+     * @return Уникальный идентификатор гостя.
+     */
+    public int getGuestId() {
+<span class="fc" id="L62">        return guestId;</span>
+    }
+
+    /**
+     * Возвращает полное имя гостя.
+     *
+     * @return Полное имя гостя.
+     */
+    public String getFullName() {
+<span class="nc" id="L71">        return this.fullName;</span>
+    }
+
+    /**
+     * Возвращает идентификатор номера, в котором размещен гость.
+     *
+     * @return Идентификатор номера.
+     */
+    public int getRoomId() {
+<span class="fc" id="L80">        return roomId;</span>
+    }
+
+    /**
+     * Возвращает дату заселения гостя.
+     *
+     * @return Дата заселения гостя.
+     */
+    public Date getCheckInDate() {
+<span class="nc" id="L89">        return checkInDate;</span>
+    }
+
+    /**
+     * Возвращает продолжительность пребывания гостя в днях.
+     *
+     * @return Продолжительность пребывания в днях.
+     */
+    public int getDaysOfStay() {
+<span class="fc" id="L98">        return daysOfStay;</span>
+    }
+
+    /**
+     * Устанавливает идентификатор номера, в котором размещен гость.
+     *
+     * @param roomId Идентификатор номера.
+     */
+    public void setRoomId(int roomId) {
+<span class="fc" id="L107">        this.roomId = roomId;</span>
+<span class="fc" id="L108">    }</span>
+
+    /**
+     * Возвращает строковое представление объекта {@link Guest}, включая информацию
+     * о номере, имени, дате заселения и продолжительности пребывания.
+     *
+     * @return Строковое представление объекта.
+     */
+    @Override
+    public String toString() {
+<span class="nc" id="L118">        return &quot;{&quot; +</span>
+                &quot;номер гостя:&quot; + guestId +
+                &quot; ФИО гостя :&quot; + fullName +
+                &quot;, день заселения:&quot; + checkInDate +
+                &quot;, продолжительность аренды:&quot; + daysOfStay +
+                '}';
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

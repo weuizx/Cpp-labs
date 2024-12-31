@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ru"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MultiBedRoom.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">hotel</a> &gt; <a href="index.source.html" class="el_package">org.example.room</a> &gt; <span class="el_source">MultiBedRoom.java</span></div><h1>MultiBedRoom.java</h1><pre class="source lang-java linenums">package org.example.room;
+
+import org.example.Guest;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+/**
+ * Класс, представляющий многоместную комнату в гостинице.
+ * Этот класс предназначен для номеров, которые могут быть заняты несколькими гостями.
+ * Количество гостей ограничено размером комнаты.
+ */
+public class MultiBedRoom extends Room {
+
+    private static final int PRICE = 8000; // Суточная цена за номер
+
+    private final int roomSize; // Максимальное количество гостей в номере
+<span class="fc" id="L19">    private final Map&lt;Integer, Guest&gt; guests = new HashMap&lt;&gt;(); // Карта для хранения гостей</span>
+
+    /**
+     * Конструктор для создания многоместного номера.
+     * Принимает идентификатор номера и размер комнаты.
+     *
+     * @param roomId Идентификатор номера.
+     * @param roomSize Максимальное количество гостей, которое может разместиться в номере.
+     */
+    public MultiBedRoom(int roomId, int roomSize) {
+<span class="fc" id="L29">        super(roomId);</span>
+<span class="fc" id="L30">        this.roomSize = roomSize;</span>
+<span class="fc" id="L31">    }</span>
+
+    /**
+     * Возвращает тип номера.
+     *
+     * @return Тип номера (MULTI).
+     */
+    @Override
+    public RoomType getRoomType() {
+<span class="fc" id="L40">        return RoomType.MULTI;</span>
+    }
+
+    /**
+     * Возвращает цену за номер.
+     *
+     * @return Суточная цена за номер (8000).
+     */
+    @Override
+    public int getPrice() {
+<span class="fc" id="L50">        return PRICE;</span>
+    }
+
+    /**
+     * Возвращает количество гостей, зарегистрированных в номере.
+     *
+     * @return Количество гостей в номере.
+     */
+    @Override
+    public int getNumberOfGuests() {
+<span class="fc" id="L60">        return guests.size();</span>
+    }
+
+    /**
+     * Возвращает размер комнаты (максимальное количество гостей).
+     *
+     * @return Размер комнаты.
+     */
+    @Override
+    public int getRoomSize() {
+<span class="fc" id="L70">        return roomSize;</span>
+    }
+
+    /**
+     * Регистрирует гостя в многоместной комнате.
+     * Если номер уже занят, регистрация не происходит.
+     * Если количество гостей достигает максимально разрешённого, номер становится занятым.
+     *
+     * @param guest Гость, которого нужно зарегистрировать.
+     * @throws RuntimeException если номер уже занят.
+     */
+    @Override
+    public void checkInGuest(Guest guest) {
+<span class="fc bfc" id="L83" title="All 2 branches covered.">        if (!this.isFree()) {</span>
+<span class="fc" id="L84">            throw new RuntimeException(&quot;Не удалось зарегистрировать гостя в номере &quot; + this.getRoomId() + &quot;. Номер занят!&quot;);</span>
+        }
+<span class="fc" id="L86">        guest.setRoomId(this.roomId);</span>
+<span class="fc" id="L87">        this.guests.put(guest.getGuestId(), guest);</span>
+<span class="fc bfc" id="L88" title="All 2 branches covered.">        if (this.guests.size() == this.roomSize) {</span>
+<span class="fc" id="L89">            this.isFree = false;</span>
+        }
+<span class="fc" id="L91">    }</span>
+
+    /**
+     * Выселяет гостя из многоместной комнаты.
+     * Если гость не зарегистрирован в номере, выбрасывается исключение.
+     * Если после выселения гостей в номере остаётся меньше, чем позволяет размер комнаты, номер становится свободным.
+     *
+     * @param guest Гость, которого нужно выселить.
+     * @throws RuntimeException если гость не зарегистрирован в номере.
+     */
+    @Override
+    public void evictGuest(Guest guest) {
+<span class="fc" id="L103">        Guest removedGuest = this.guests.remove(guest.getGuestId());</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">        if (removedGuest == null) {</span>
+<span class="fc" id="L105">            throw new RuntimeException(&quot;Не удалось выселить гостя &quot; + guest.getGuestId() + &quot; из номера &quot; +</span>
+<span class="fc" id="L106">                    this.getRoomId() + &quot;. Гость в этом номере не живет!&quot;);</span>
+        }
+<span class="pc bpc" id="L108" title="1 of 2 branches missed.">        if (this.guests.size() &lt; this.roomSize) {</span>
+<span class="fc" id="L109">            this.isFree = true;</span>
+        }
+<span class="fc" id="L111">    }</span>
+
+    /**
+     * Возвращает строковое представление информации о многоместной комнате.
+     * Строка содержит ID номера, его статус (свободен/занят), тип, цену и список гостей.
+     *
+     * @return Строковое представление информации о многоместной комнате.
+     */
+    @Override
+    public String toString() {
+<span class="nc" id="L121">        return &quot;Номер комнаты : &quot; + roomId +</span>
+<span class="nc bnc" id="L122" title="All 2 branches missed.">                &quot;\nстатус : &quot; + (isFree ? &quot;свободна&quot; : &quot;занята&quot;) +</span>
+<span class="nc" id="L123">                &quot;\nтип : &quot; + getRoomType().getDescription() +</span>
+<span class="nc" id="L124">                &quot;\nсуточный тариф : &quot; + getPrice() +</span>
+<span class="nc" id="L125">                &quot;\nгости : \n&quot; + guests.values().stream().map(Guest::toString).collect(Collectors.joining(&quot;\n&quot;));</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

@@ -1,0 +1,2 @@
+/usr/bin/ar qc libternaryvector.a CMakeFiles/ternaryvector.dir/src/main/ternaryvector.cpp.o
+/usr/bin/ranlib libternaryvector.a

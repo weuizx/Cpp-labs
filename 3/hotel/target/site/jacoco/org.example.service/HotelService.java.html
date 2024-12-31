@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ru"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>HotelService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">hotel</a> &gt; <a href="index.source.html" class="el_package">org.example.service</a> &gt; <span class="el_source">HotelService.java</span></div><h1>HotelService.java</h1><pre class="source lang-java linenums">package org.example.service;
+
+import org.example.Guest;
+import org.example.room.*;
+import org.example.service.calculator.MultiThreadOccupancyCalculator;
+import org.example.service.calculator.OccupancyCalculator;
+
+import java.util.*;
+import java.util.stream.Stream;
+
+/**
+ * Сервис для управления гостиницей. Этот класс предоставляет функциональность для работы с номерами,
+ * включая регистрацию гостей, выселение, расчет занятости и управление свободными номерами.
+ */
+<span class="fc" id="L15">public class HotelService {</span>
+
+    /**
+     * Карта, хранящая все номера гостиницы, включая все типы.
+     */
+<span class="fc" id="L20">    private final Map&lt;Integer, Room&gt; ALL_ROOMS = new TreeMap&lt;&gt;(Comparator.naturalOrder());</span>
+
+    /**
+     * Карты для различных типов номеров (люксовые, одноместные и многоместные).
+     */
+<span class="fc" id="L25">    private final Map&lt;Integer, Room&gt; LUXURY_ROOMS = new TreeMap&lt;&gt;(Comparator.naturalOrder());</span>
+<span class="fc" id="L26">    private final Map&lt;Integer, Room&gt; SINGLE_BED_ROOMS = new TreeMap&lt;&gt;(Comparator.naturalOrder());</span>
+<span class="fc" id="L27">    private final Map&lt;Integer, Room&gt; MULTI_BED_ROOMS = new TreeMap&lt;&gt;(Comparator.naturalOrder());</span>
+
+    /**
+     * Карты для свободных номеров каждого типа.
+     */
+<span class="fc" id="L32">    private final Map&lt;Integer, Room&gt; FREE_LUXURY_ROOMS = new TreeMap&lt;&gt;(Comparator.naturalOrder());</span>
+<span class="fc" id="L33">    private final Map&lt;Integer, Room&gt; FREE_SINGLE_BED_ROOMS = new TreeMap&lt;&gt;(Comparator.naturalOrder());</span>
+<span class="fc" id="L34">    private final Map&lt;Integer, Room&gt; FREE_MULTI_BED_ROOMS = new TreeMap&lt;&gt;(Comparator.naturalOrder());</span>
+
+    /**
+     * Карта, хранящая всех гостей гостиницы по их уникальному идентификатору.
+     */
+<span class="fc" id="L39">    private final Map&lt;Integer, Guest&gt; GUESTS = new HashMap&lt;&gt;();</span>
+
+    /**
+     * Калькулятор для расчета занятости гостиницы с использованием многопоточности.
+     */
+<span class="fc" id="L44">    private final OccupancyCalculator occupancyCalculator = new MultiThreadOccupancyCalculator(SINGLE_BED_ROOMS, MULTI_BED_ROOMS, LUXURY_ROOMS);</span>
+
+    /**
+     * Инициализация данных, включая создание номеров и добавление их в соответствующие карты.
+     */
+    {
+<span class="fc" id="L50">        init();</span>
+<span class="fc" id="L51">    }</span>
+
+    /**
+     * Метод для инициализации номеров в гостинице. Создает различные типы номеров (люксовые, одноместные и многоместные)
+     * и добавляет их в соответствующие карты.
+     */
+    private void init() {
+<span class="fc bfc" id="L58" title="All 2 branches covered.">        for (int i = 301, n = 2; i &lt; 304; i++, n++) {</span>
+<span class="fc" id="L59">            Room luxuryRoom = new LuxuryRoom(i, n);</span>
+<span class="fc" id="L60">            ALL_ROOMS.put(luxuryRoom.getRoomId(), luxuryRoom);</span>
+<span class="fc" id="L61">            LUXURY_ROOMS.put(luxuryRoom.getRoomId(), luxuryRoom);</span>
+<span class="fc" id="L62">            FREE_LUXURY_ROOMS.put(luxuryRoom.getRoomId(), luxuryRoom);</span>
+        }
+
+<span class="fc bfc" id="L65" title="All 2 branches covered.">        for (int i = 201; i &lt; 206; i++) {</span>
+<span class="fc" id="L66">            Room singleBedRoom = new SingleBedRoom(i);</span>
+<span class="fc" id="L67">            ALL_ROOMS.put(singleBedRoom.getRoomId(), singleBedRoom);</span>
+<span class="fc" id="L68">            SINGLE_BED_ROOMS.put(singleBedRoom.getRoomId(), singleBedRoom);</span>
+<span class="fc" id="L69">            FREE_SINGLE_BED_ROOMS.put(singleBedRoom.getRoomId(), singleBedRoom);</span>
+        }
+
+<span class="fc bfc" id="L72" title="All 2 branches covered.">        for (int i = 101; i &lt; 104; i++) {</span>
+<span class="fc" id="L73">            Room multiBedRoom = new MultiBedRoom(i, 3);</span>
+<span class="fc" id="L74">            ALL_ROOMS.put(multiBedRoom.getRoomId(), multiBedRoom);</span>
+<span class="fc" id="L75">            MULTI_BED_ROOMS.put(multiBedRoom.getRoomId(), multiBedRoom);</span>
+<span class="fc" id="L76">            FREE_MULTI_BED_ROOMS.put(multiBedRoom.getRoomId(), multiBedRoom);</span>
+        }
+
+<span class="fc bfc" id="L79" title="All 2 branches covered.">        for (int i = 104; i &lt; 107; i++) {</span>
+<span class="fc" id="L80">            Room multiBedRoom = new MultiBedRoom(i, 5);</span>
+<span class="fc" id="L81">            ALL_ROOMS.put(multiBedRoom.getRoomId(), multiBedRoom);</span>
+<span class="fc" id="L82">            MULTI_BED_ROOMS.put(multiBedRoom.getRoomId(), multiBedRoom);</span>
+<span class="fc" id="L83">            FREE_MULTI_BED_ROOMS.put(multiBedRoom.getRoomId(), multiBedRoom);</span>
+        }
+<span class="fc bfc" id="L85" title="All 2 branches covered.">        for (int i = 107; i &lt; 110; i++) {</span>
+<span class="fc" id="L86">            Room multiBedRoom = new MultiBedRoom(i, 7);</span>
+<span class="fc" id="L87">            ALL_ROOMS.put(multiBedRoom.getRoomId(), multiBedRoom);</span>
+<span class="fc" id="L88">            MULTI_BED_ROOMS.put(multiBedRoom.getRoomId(), multiBedRoom);</span>
+<span class="fc" id="L89">            FREE_MULTI_BED_ROOMS.put(multiBedRoom.getRoomId(), multiBedRoom);</span>
+        }
+<span class="fc" id="L91">    }</span>
+
+    /**
+     * Метод для получения списка всех номеров гостиницы.
+     *
+     * @return Список всех номеров.
+     */
+    public List&lt;Room&gt; getAllRooms() {
+<span class="nc" id="L99">        return ALL_ROOMS.values().stream().toList();</span>
+    }
+
+    /**
+     * Метод для получения списка всех свободных номеров.
+     *
+     * @return Список свободных номеров всех типов.
+     */
+    public List&lt;Room&gt; getFreeRooms() {
+<span class="fc" id="L108">        return Stream.of(FREE_MULTI_BED_ROOMS.values(), FREE_SINGLE_BED_ROOMS.values(), FREE_LUXURY_ROOMS.values())</span>
+<span class="fc" id="L109">                .flatMap(Collection::stream).toList();</span>
+    }
+
+    /**
+     * Метод для расчета текущей занятости гостиницы.
+     *
+     * @return Занятость гостиницы, выраженная как отношение числа занятых мест к общему количеству мест.
+     */
+    public float getOccupancy() {
+<span class="fc" id="L118">        return occupancyCalculator.getOccupancy();</span>
+    }
+
+    /**
+     * Метод для регистрации гостя в номер.
+     *
+     * @param guest Гость, которого необходимо зарегистрировать.
+     * @param roomType Тип номера, в который необходимо зарегистрировать гостя.
+     * @return Зарегистрированный гость.
+     * @throws RuntimeException Если нет свободных номеров соответствующего типа.
+     */
+    public Guest checkInGuest(Guest guest, RoomType roomType) {
+        Room room;
+<span class="pc bpc" id="L131" title="1 of 4 branches missed.">        switch (roomType) {</span>
+            case MULTI:
+<span class="pc bpc" id="L133" title="1 of 2 branches missed.">                if (FREE_MULTI_BED_ROOMS.isEmpty()) {</span>
+<span class="nc" id="L134">                    throw new RuntimeException(&quot;Нет свободных многоместных номеров!&quot;);</span>
+                }
+<span class="fc" id="L136">                room = FREE_MULTI_BED_ROOMS.values().stream().findFirst().get();</span>
+<span class="fc" id="L137">                room.checkInGuest(guest);</span>
+<span class="pc bpc" id="L138" title="1 of 2 branches missed.">                if (!room.isFree()) {</span>
+<span class="nc" id="L139">                    FREE_MULTI_BED_ROOMS.remove(room.getRoomId());</span>
+                }
+                break;
+            case SINGLE:
+<span class="fc bfc" id="L143" title="All 2 branches covered.">                if (FREE_SINGLE_BED_ROOMS.isEmpty()) {</span>
+<span class="fc" id="L144">                    throw new RuntimeException(&quot;Нет свободных одноместных номеров!&quot;);</span>
+                }
+<span class="fc" id="L146">                room = FREE_SINGLE_BED_ROOMS.values().stream().findFirst().get();</span>
+<span class="fc" id="L147">                room.checkInGuest(guest);</span>
+<span class="fc" id="L148">                FREE_SINGLE_BED_ROOMS.remove(room.getRoomId());</span>
+<span class="fc" id="L149">                break;</span>
+            case LUXURY:
+<span class="pc bpc" id="L151" title="1 of 2 branches missed.">                if (FREE_LUXURY_ROOMS.isEmpty()) {</span>
+<span class="nc" id="L152">                    throw new RuntimeException(&quot;Нет свободных номеров люкс!&quot;);</span>
+                }
+<span class="fc" id="L154">                room = FREE_LUXURY_ROOMS.values().stream().findFirst().get();</span>
+<span class="fc" id="L155">                room.checkInGuest(guest);</span>
+<span class="fc" id="L156">                FREE_LUXURY_ROOMS.remove(room.getRoomId());</span>
+                break;
+        }
+<span class="fc" id="L159">        GUESTS.put(guest.getGuestId(), guest);</span>
+<span class="fc" id="L160">        return guest;</span>
+    }
+
+    /**
+     * Метод для выселения гостя из номера.
+     *
+     * @param guest Гость, которого необходимо выселить.
+     * @return Сумма, которую нужно заплатить за пребывание гостя в гостинице (суточная ставка * количество дней).
+     * @throws RuntimeException Если гость не зарегистрирован в гостинице.
+     */
+    public int evictGuest(Guest guest) {
+<span class="fc" id="L171">        Room room = ALL_ROOMS.get(guest.getRoomId());</span>
+<span class="fc" id="L172">        room.evictGuest(guest);</span>
+<span class="pc bpc" id="L173" title="1 of 2 branches missed.">        if (room.isFree()) {</span>
+<span class="pc bpc" id="L174" title="3 of 4 branches missed.">            switch (room.getRoomType()) {</span>
+                case MULTI:
+<span class="nc" id="L176">                    FREE_MULTI_BED_ROOMS.putIfAbsent(room.getRoomId(), room);</span>
+<span class="nc" id="L177">                    break;</span>
+                case SINGLE:
+<span class="fc" id="L179">                    FREE_SINGLE_BED_ROOMS.putIfAbsent(room.getRoomId(), room);</span>
+<span class="fc" id="L180">                    break;</span>
+                case LUXURY:
+<span class="nc" id="L182">                    FREE_LUXURY_ROOMS.putIfAbsent(room.getRoomId(), room);</span>
+                    break;
+            }
+        }
+<span class="fc" id="L186">        GUESTS.remove(guest.getGuestId());</span>
+<span class="fc" id="L187">        return guest.getDaysOfStay() * room.getPrice();</span>
+    }
+
+    /**
+     * Метод для получения гостя по его уникальному идентификатору.
+     *
+     * @param guestId Уникальный идентификатор гостя.
+     * @return Гость, если найден, или {@link Optional#empty()} если такого гостя нет.
+     */
+    public Optional&lt;Guest&gt; getGuestById(int guestId) {
+<span class="fc" id="L197">        return Optional.ofNullable(GUESTS.get(guestId));</span>
+    }
+
+    /**
+     * Метод для получения номера по его уникальному идентификатору.
+     *
+     * @param roomId Уникальный идентификатор номера.
+     * @return Номер, если найден, или {@link Optional#empty()} если такого номера нет.
+     */
+    public Optional&lt;Room&gt; getRoomById(int roomId) {
+<span class="fc" id="L207">        return Optional.ofNullable(ALL_ROOMS.get(roomId));</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

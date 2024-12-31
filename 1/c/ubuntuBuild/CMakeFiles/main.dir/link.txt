@@ -1,0 +1,1 @@
+/usr/bin/cc  -Wall -Wextra   CMakeFiles/main.dir/src/main.c.o  -o main libio.a libhtml.a libdialog.a 

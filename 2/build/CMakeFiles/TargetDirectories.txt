@@ -1,0 +1,8 @@
+C:/Users/Alexandr/Desktop/oop2024/2/build/CMakeFiles/util.dir
+C:/Users/Alexandr/Desktop/oop2024/2/build/CMakeFiles/ternarysignal.dir
+C:/Users/Alexandr/Desktop/oop2024/2/build/CMakeFiles/ternaryvector.dir
+C:/Users/Alexandr/Desktop/oop2024/2/build/CMakeFiles/dialog.dir
+C:/Users/Alexandr/Desktop/oop2024/2/build/CMakeFiles/MyTests.dir
+C:/Users/Alexandr/Desktop/oop2024/2/build/CMakeFiles/main.dir
+C:/Users/Alexandr/Desktop/oop2024/2/build/CMakeFiles/edit_cache.dir
+C:/Users/Alexandr/Desktop/oop2024/2/build/CMakeFiles/rebuild_cache.dir

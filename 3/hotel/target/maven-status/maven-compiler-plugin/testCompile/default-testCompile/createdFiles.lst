@@ -1,0 +1,6 @@
+org\example\room\LuxuryRoomTest.class
+org\example\service\calculator\SingleThreadOccupancyCalculatorTest.class
+org\example\room\MultiBedRoomTest.class
+org\example\room\SingleBedRoomTest.class
+org\example\service\HotelServiceTest.class
+org\example\service\calculator\MultiThreadOccupancyCalculatorTest.class

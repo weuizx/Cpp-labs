@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ru"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SingleBedRoom.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">hotel</a> &gt; <a href="index.source.html" class="el_package">org.example.room</a> &gt; <span class="el_source">SingleBedRoom.java</span></div><h1>SingleBedRoom.java</h1><pre class="source lang-java linenums">package org.example.room;
+
+import org.example.Guest;
+
+import java.util.Objects;
+
+/**
+ * Класс, представляющий одноместный номер в гостинице.
+ * Этот класс предназначен для номеров, в которых может разместиться только один гость.
+ */
+public class SingleBedRoom extends Room {
+
+    private static final int PRICE = 10000;
+    private static final int ROOM_SIZE = 1;
+
+<span class="fc" id="L16">    private Guest guest = null;</span>
+
+    /**
+     * Конструктор для создания одноместного номера.
+     * Принимает идентификатор номера.
+     *
+     * @param roomId Идентификатор номера.
+     */
+    public SingleBedRoom(int roomId) {
+<span class="fc" id="L25">        super(roomId);</span>
+<span class="fc" id="L26">    }</span>
+
+    /**
+     * Возвращает тип номера.
+     *
+     * @return Тип номера (SINGLE).
+     */
+    @Override
+    public RoomType getRoomType() {
+<span class="fc" id="L35">        return RoomType.SINGLE;</span>
+    }
+
+    /**
+     * Возвращает цену за номер.
+     *
+     * @return Суточная цена за номер (10000).
+     */
+    @Override
+    public int getPrice() {
+<span class="fc" id="L45">        return PRICE;</span>
+    }
+
+    /**
+     * Возвращает размер комнаты (в данном случае всегда 1).
+     *
+     * @return Размер комнаты (1).
+     */
+    @Override
+    public int getRoomSize() {
+<span class="fc" id="L55">        return ROOM_SIZE;</span>
+    }
+
+    /**
+     * Возвращает количество гостей, зарегистрированных в номере.
+     * Для одноместного номера количество гостей может быть только 0 или 1.
+     *
+     * @return Количество гостей в номере (0 или 1).
+     */
+    @Override
+    public int getNumberOfGuests() {
+<span class="fc bfc" id="L66" title="All 2 branches covered.">        return guest == null ? 0 : 1;</span>
+    }
+
+    /**
+     * Регистрирует гостя в одноместном номере.
+     * Если номер уже занят, регистрация не происходит.
+     *
+     * @param guest Гость, которого нужно зарегистрировать.
+     * @throws RuntimeException если номер уже занят.
+     */
+    @Override
+    public void checkInGuest(Guest guest) {
+<span class="fc bfc" id="L78" title="All 2 branches covered.">        if (!this.isFree()) {</span>
+<span class="fc" id="L79">            throw new RuntimeException(&quot;Не удалось зарегистрировать гостя в номере &quot; + this.getRoomId() + &quot;. Номер занят!&quot;);</span>
+        }
+<span class="fc" id="L81">        guest.setRoomId(this.roomId);</span>
+<span class="fc" id="L82">        this.guest = guest;</span>
+<span class="fc" id="L83">        this.isFree = false;</span>
+<span class="fc" id="L84">    }</span>
+
+    /**
+     * Выселяет гостя из одноместного номера.
+     * Если гость не зарегистрирован в номере, выбрасывается исключение.
+     *
+     * @param guest Гость, которого необходимо выселить.
+     * @throws RuntimeException если гость не зарегистрирован в номере.
+     */
+    @Override
+    public void evictGuest(Guest guest) {
+<span class="pc bpc" id="L95" title="1 of 2 branches missed.">        if (!this.guest.equals(guest)) {</span>
+<span class="nc" id="L96">            throw new RuntimeException(&quot;Не удалось выселить гостя &quot; + guest.getGuestId() + &quot; из номера &quot; +</span>
+<span class="nc" id="L97">                    this.getRoomId() + &quot;. Гость в этом номере не живет!&quot;);</span>
+        }
+<span class="fc" id="L99">        this.guest = null;</span>
+<span class="fc" id="L100">        this.isFree = true;</span>
+<span class="fc" id="L101">    }</span>
+
+    /**
+     * Возвращает строковое представление информации об одноместном номере.
+     * Строка содержит ID номера, его статус (свободен/занят), тип, цену и информацию о госте.
+     *
+     * @return Строковое представление информации о номере.
+     */
+    @Override
+    public String toString() {
+<span class="nc" id="L111">        return &quot;Номер комнаты : &quot; + roomId +</span>
+<span class="nc bnc" id="L112" title="All 2 branches missed.">                &quot;\nстатус : &quot; + (isFree ? &quot;свободна&quot; : &quot;занята&quot;) +</span>
+<span class="nc" id="L113">                &quot;\nтип : &quot; + getRoomType().getDescription() +</span>
+<span class="nc" id="L114">                &quot;\nсуточный тариф : &quot; + getPrice() +</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">                &quot;\nгость : &quot; + (Objects.isNull(guest) ? &quot;отсутствует&quot; : guest.toString());</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

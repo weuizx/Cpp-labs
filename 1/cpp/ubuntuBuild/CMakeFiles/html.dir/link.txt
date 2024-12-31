@@ -1,0 +1,2 @@
+/usr/bin/ar qc libhtml.a  CMakeFiles/html.dir/src/html.cpp.o
+/usr/bin/ranlib libhtml.a

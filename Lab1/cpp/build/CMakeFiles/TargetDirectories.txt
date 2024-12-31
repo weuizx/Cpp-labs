@@ -1,6 +1,0 @@
-C:/Users/Alexandr/Desktop/C++/Lab1/cpp/build/CMakeFiles/io.dir
-C:/Users/Alexandr/Desktop/C++/Lab1/cpp/build/CMakeFiles/html.dir
-C:/Users/Alexandr/Desktop/C++/Lab1/cpp/build/CMakeFiles/dialog.dir
-C:/Users/Alexandr/Desktop/C++/Lab1/cpp/build/CMakeFiles/main.dir
-C:/Users/Alexandr/Desktop/C++/Lab1/cpp/build/CMakeFiles/edit_cache.dir
-C:/Users/Alexandr/Desktop/C++/Lab1/cpp/build/CMakeFiles/rebuild_cache.dir

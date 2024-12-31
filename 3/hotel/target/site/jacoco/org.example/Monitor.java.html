@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ru"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Monitor.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">hotel</a> &gt; <a href="index.source.html" class="el_package">org.example</a> &gt; <span class="el_source">Monitor.java</span></div><h1>Monitor.java</h1><pre class="source lang-java linenums">package org.example;
+
+import org.example.room.LuxuryRoom;
+import org.example.room.Room;
+import org.example.room.RoomType;
+import org.example.service.HotelService;
+
+import java.util.*;
+import java.util.stream.Collectors;
+
+/**
+ * Класс для отображения консольного интерфейса гостиничного сервиса.
+ * Этот класс позволяет пользователю:
+ * - Выполнять регистрацию и выселение гостей.
+ * - Просматривать информацию о свободных и всех номерах.
+ * - Получать подробную информацию о номере.
+ * - Проверять уровень занятости гостиницы.
+ */
+<span class="nc" id="L19">public class Monitor {</span>
+
+    /**
+     * Сервис гостиницы, используемый для выполнения операций.
+     */
+<span class="nc" id="L24">    private final HotelService hotelService = new HotelService();</span>
+
+    /**
+     * Список доступных опций в меню.
+     */
+<span class="nc" id="L29">    private final List&lt;String&gt; options = List.of(</span>
+            &quot;Завершить сеанс&quot;,
+            &quot;Оформить регистрацию гостя&quot;,
+            &quot;Оформить выселение гостя&quot;,
+            &quot;Вывести информацию о свободных номерах&quot;,
+            &quot;Вывести информацию о всех номерах гостиницы&quot;,
+            &quot;Вывести подробную информацию о номере&quot;,
+            &quot;Вывести информацию о занятости гостиницы&quot;);
+
+    /**
+     * Сопоставление опций с соответствующими методами для их обработки.
+     */
+<span class="nc" id="L41">    private final Map&lt;Integer, Runnable&gt; methodHolder = new HashMap&lt;&gt;();</span>
+
+    {
+<span class="nc" id="L44">        methodHolder.put(1, this::processCheckIn);</span>
+<span class="nc" id="L45">        methodHolder.put(2, this::processEvict);</span>
+<span class="nc" id="L46">        methodHolder.put(3, this::processPrintFreeRooms);</span>
+<span class="nc" id="L47">        methodHolder.put(4, this::processPrintAllRooms);</span>
+<span class="nc" id="L48">        methodHolder.put(5, this::processPrintRoomInfoById);</span>
+<span class="nc" id="L49">        methodHolder.put(6, this::processGetOccupancy);</span>
+<span class="nc" id="L50">    }</span>
+
+    /**
+     * Основной метод, управляющий циклом работы программы.
+     * Отображает меню, принимает выбор пользователя и вызывает соответствующий метод.
+     */
+    public void process() {
+<span class="nc" id="L57">        printOptions();</span>
+<span class="nc" id="L58">        int optionNumber = InputUtils.readIntInRange(0, options.size());</span>
+<span class="nc bnc" id="L59" title="All 2 branches missed.">        if (optionNumber == 0) {</span>
+<span class="nc" id="L60">            System.out.println(&quot;Сеанс завершен. До свидания!&quot;);</span>
+<span class="nc" id="L61">            return;</span>
+        }
+<span class="nc" id="L63">        methodHolder.get(optionNumber).run();</span>
+<span class="nc" id="L64">        process();</span>
+<span class="nc" id="L65">    }</span>
+
+    /**
+     * Выводит список доступных опций для пользователя.
+     */
+    private void printOptions() {
+<span class="nc" id="L71">        System.out.println(&quot;Введите номер опции :&quot;);</span>
+<span class="nc bnc" id="L72" title="All 2 branches missed.">        for (int i = 0; i &lt; options.size(); i++) {</span>
+<span class="nc" id="L73">            System.out.println(String.valueOf(i) + &quot;. &quot; + options.get(i));</span>
+        }
+<span class="nc" id="L75">    }</span>
+
+    /**
+     * Выводит типы доступных номеров.
+     */
+    private void printRoomTypes() {
+<span class="nc" id="L81">        System.out.println(&quot;Введите тип номера :&quot;);</span>
+<span class="nc" id="L82">        RoomType[] roomTypes = RoomType.values();</span>
+<span class="nc bnc" id="L83" title="All 2 branches missed.">        for (int i = 0; i &lt; roomTypes.length; i++) {</span>
+<span class="nc" id="L84">            System.out.println(String.valueOf(i + 1) + &quot;. &quot; + roomTypes[i].getDescription());</span>
+        }
+<span class="nc" id="L86">    }</span>
+
+    /**
+     * Обрабатывает процесс регистрации гостя.
+     * Запрашивает данные у пользователя и регистрирует гостя в соответствующем номере.
+     */
+    private void processCheckIn() {
+<span class="nc" id="L93">        System.out.println(&quot;Введите ФО гостя :&quot;);</span>
+<span class="nc" id="L94">        String fullName = InputUtils.readFullName();</span>
+<span class="nc" id="L95">        System.out.println(&quot;Введите количество дней аренды :&quot;);</span>
+<span class="nc" id="L96">        int daysOfStay = InputUtils.readIntInRange(1, 365);</span>
+<span class="nc" id="L97">        Guest guest = new Guest(daysOfStay, fullName);</span>
+
+<span class="nc" id="L99">        printRoomTypes();</span>
+<span class="nc" id="L100">        int numberOfRoomType = InputUtils.readIntInRange(1, 3);</span>
+<span class="nc" id="L101">        RoomType roomType = RoomType.values()[numberOfRoomType - 1];</span>
+        try {
+<span class="nc" id="L103">            guest = hotelService.checkInGuest(guest, roomType);</span>
+<span class="nc" id="L104">            System.out.println(&quot;Гость с id = &quot; + guest.getGuestId() + &quot; успешно зарегистрирован в номере &quot; + guest.getRoomId());</span>
+<span class="nc bnc" id="L105" title="All 2 branches missed.">            if (roomType.equals(RoomType.LUXURY)) {</span>
+<span class="nc" id="L106">                System.out.println(&quot;Добавить второго гостя в номер?\n1. Да\n2. Нет&quot;);</span>
+<span class="nc bnc" id="L107" title="All 2 branches missed.">                if (InputUtils.readIntInRange(1, 2) == 1) {</span>
+<span class="nc" id="L108">                    System.out.println(&quot;Введите ФИО гостя :&quot;);</span>
+<span class="nc" id="L109">                    fullName = InputUtils.readFullName();</span>
+<span class="nc" id="L110">                    Guest guest2 = new Guest(daysOfStay, fullName);</span>
+<span class="nc" id="L111">                    LuxuryRoom room = (LuxuryRoom) hotelService.getRoomById(guest.getRoomId()).get();</span>
+<span class="nc" id="L112">                    room.checkInGuest(guest2);</span>
+<span class="nc" id="L113">                    System.out.println(&quot;Гость с id = &quot; + guest2.getGuestId() + &quot; успешно зарегистрирован в номере &quot; + guest2.getRoomId());</span>
+                }
+            }
+<span class="nc" id="L116">        } catch (Exception e) {</span>
+<span class="nc" id="L117">            System.out.println(&quot;Не удалось заселить гостя. &quot; + e.getMessage());</span>
+<span class="nc" id="L118">        }</span>
+<span class="nc" id="L119">    }</span>
+
+    /**
+     * Обрабатывает процесс выселения гостя.
+     * Запрашивает id гостя, выселяет его из номера и выводит сумму, которую он должен заплатить.
+     */
+    private void processEvict() {
+<span class="nc" id="L126">        System.out.println(&quot;Введите id гостя&quot;);</span>
+<span class="nc" id="L127">        int guestId = InputUtils.readIntInRange(0, Integer.MAX_VALUE);</span>
+<span class="nc" id="L128">        Optional&lt;Guest&gt; optionalGuest = hotelService.getGuestById(guestId);</span>
+        int price;
+<span class="nc bnc" id="L130" title="All 2 branches missed.">        if (optionalGuest.isPresent()) {</span>
+<span class="nc" id="L131">            price = hotelService.evictGuest(optionalGuest.get());</span>
+<span class="nc" id="L132">            System.out.println(&quot;Гость успешно выселен, к оплате &quot; + price);</span>
+        } else {
+<span class="nc" id="L134">            System.out.println(&quot;Гость с id &quot; + guestId + &quot; не найден&quot;);</span>
+        }
+<span class="nc" id="L136">    }</span>
+
+    /**
+     * Обрабатывает процесс вывода информации о свободных номерах.
+     */
+    private void processPrintFreeRooms() {
+<span class="nc" id="L142">        List&lt;Room&gt; rooms = hotelService.getFreeRooms();</span>
+<span class="nc" id="L143">        System.out.println(&quot;Свободные номера :&quot;);</span>
+<span class="nc" id="L144">        System.out.println(rooms.stream().</span>
+<span class="nc" id="L145">                map(room -&gt; (&quot;{Номер:&quot; + room.getRoomId() + &quot;, тип:&quot; + room.getRoomType().getDescription() + &quot;}&quot;)).</span>
+<span class="nc" id="L146">                collect(Collectors.joining(&quot;\n&quot;)));</span>
+<span class="nc" id="L147">    }</span>
+
+    /**
+     * Обрабатывает процесс вывода информации о всех номерах гостиницы.
+     */
+    private void processPrintAllRooms() {
+<span class="nc" id="L153">        List&lt;Room&gt; rooms = hotelService.getAllRooms();</span>
+<span class="nc" id="L154">        System.out.println(&quot;Номера гостиницы :&quot;);</span>
+<span class="nc" id="L155">        System.out.println(rooms.stream().</span>
+<span class="nc" id="L156">                map(room -&gt; (&quot;{Номер:&quot; + room.getRoomId() + &quot;, тип:&quot; + room.getRoomType().getDescription() + &quot;}&quot;)).</span>
+<span class="nc" id="L157">                collect(Collectors.joining(&quot;\n&quot;)));</span>
+<span class="nc" id="L158">    }</span>
+
+    /**
+     * Обрабатывает процесс вывода подробной информации о номере по его id.
+     */
+    private void processPrintRoomInfoById() {
+<span class="nc" id="L164">        System.out.println(&quot;Введите id номера&quot;);</span>
+<span class="nc" id="L165">        int roomId = InputUtils.readIntInRange(0, Integer.MAX_VALUE);</span>
+<span class="nc" id="L166">        Optional&lt;Room&gt; optionalRoom = hotelService.getRoomById(roomId);</span>
+<span class="nc bnc" id="L167" title="All 2 branches missed.">        if (optionalRoom.isPresent()) {</span>
+<span class="nc" id="L168">            System.out.println(optionalRoom.get());</span>
+        } else {
+<span class="nc" id="L170">            System.out.println(&quot;Номер с id &quot; + roomId + &quot; не найден&quot;);</span>
+        }
+<span class="nc" id="L172">    }</span>
+
+    /**
+     * Обрабатывает процесс вывода информации о занятости гостиницы.
+     */
+    private void processGetOccupancy() {
+<span class="nc" id="L178">        System.out.println(&quot;Занятость гостиницы : &quot; + Math.round(hotelService.getOccupancy() * 100) + &quot;%&quot;);</span>
+<span class="nc" id="L179">    }</span>
+
+    /**
+     * Основной метод программы.
+     * Запускает процесс работы с гостиницей.
+     */
+    public static void main(String[] args) {
+<span class="nc" id="L186">        Monitor monitor = new Monitor();</span>
+<span class="nc" id="L187">        monitor.process();</span>
+<span class="nc" id="L188">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

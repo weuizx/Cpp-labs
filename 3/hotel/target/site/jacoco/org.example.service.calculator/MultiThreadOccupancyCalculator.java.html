@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ru"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MultiThreadOccupancyCalculator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">hotel</a> &gt; <a href="index.source.html" class="el_package">org.example.service.calculator</a> &gt; <span class="el_source">MultiThreadOccupancyCalculator.java</span></div><h1>MultiThreadOccupancyCalculator.java</h1><pre class="source lang-java linenums">package org.example.service.calculator;
+
+import org.example.room.Room;
+
+import java.util.Iterator;
+import java.util.Map;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+
+/**
+ * Класс для расчета занятости номеров с использованием многопоточности.
+ * Этот класс реализует интерфейс {@link OccupancyCalculator} и использует три потока для параллельной обработки
+ * разных типов номеров (одноместные, многоместные, люксовые).
+ */
+public class MultiThreadOccupancyCalculator implements OccupancyCalculator {
+
+    private final Map&lt;Integer, Room&gt; SINGLE_BED_ROOMS; // Карта с одноместными номерами
+    private final Map&lt;Integer, Room&gt; MULTI_BED_ROOMS;  // Карта с многоместными номерами
+    private final Map&lt;Integer, Room&gt; LUXURY_ROOMS;    // Карта с люксовыми номерами
+
+    /**
+     * Конструктор для создания экземпляра калькулятора с многопоточной обработкой занятости.
+     *
+     * @param SINGLE_BED_ROOMS Карта с одноместными номерами.
+     * @param MULTI_BED_ROOMS Карта с многоместными номерами.
+     * @param LUXURY_ROOMS Карта с люксовыми номерами.
+     */
+    public MultiThreadOccupancyCalculator(Map&lt;Integer, Room&gt; SINGLE_BED_ROOMS,
+                                          Map&lt;Integer, Room&gt; MULTI_BED_ROOMS,
+<span class="fc" id="L32">                                          Map&lt;Integer, Room&gt; LUXURY_ROOMS) {</span>
+<span class="fc" id="L33">        this.SINGLE_BED_ROOMS = SINGLE_BED_ROOMS;</span>
+<span class="fc" id="L34">        this.MULTI_BED_ROOMS = MULTI_BED_ROOMS;</span>
+<span class="fc" id="L35">        this.LUXURY_ROOMS = LUXURY_ROOMS;</span>
+<span class="fc" id="L36">    }</span>
+
+    /**
+     * Метод для расчета текущей занятости номеров. Занятость вычисляется как отношение
+     * количества занятых мест к общему количеству мест в номерах.
+     * Многопоточное выполнение для разных типов номеров.
+     *
+     * @return Занятость в виде числа с плавающей точкой от 0.0 до 1.0.
+     *         Например, если занято 50% мест, метод вернет 0.5.
+     */
+    @Override
+    public float getOccupancy() {
+<span class="fc" id="L48">        ExecutorService executor = Executors.newFixedThreadPool(3);</span>
+
+<span class="fc" id="L50">        Future&lt;int[]&gt; singleBedOccupancy = executor.submit(new RoomOccupancyTask(SINGLE_BED_ROOMS));</span>
+<span class="fc" id="L51">        Future&lt;int[]&gt; multiBedOccupancy = executor.submit(new RoomOccupancyTask(MULTI_BED_ROOMS));</span>
+<span class="fc" id="L52">        Future&lt;int[]&gt; luxuryOccupancy = executor.submit(new RoomOccupancyTask(LUXURY_ROOMS));</span>
+
+        int numberOfGuests;
+        int numberOfBeds;
+        try {
+<span class="fc" id="L57">            numberOfGuests = singleBedOccupancy.get()[0] + multiBedOccupancy.get()[0] + luxuryOccupancy.get()[0];</span>
+<span class="fc" id="L58">            numberOfBeds = singleBedOccupancy.get()[1] + multiBedOccupancy.get()[1] + luxuryOccupancy.get()[1];</span>
+<span class="nc" id="L59">        } catch (Exception e) {</span>
+<span class="nc" id="L60">            throw new RuntimeException(&quot;Ошибка во время многопоточного расчета занятости&quot;, e);</span>
+<span class="fc" id="L61">        }</span>
+
+<span class="fc" id="L63">        executor.shutdown();</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">        return numberOfBeds == 0 ? 0 : (float) numberOfGuests / numberOfBeds;</span>
+    }
+
+    /**
+     * Задача для расчета занятости номеров одного типа.
+     * Вычисляет количество гостей и количество мест в переданных номерах.
+     */
+<span class="pc" id="L71">    private record RoomOccupancyTask(Map&lt;Integer, Room&gt; rooms) implements Callable&lt;int[]&gt; {</span>
+
+        /**
+         * Метод для выполнения задачи по расчету занятости.
+         * Проходит по номерам и суммирует количество гостей и количество мест.
+         *
+         * @return Массив из двух элементов:
+         *         1) Количество гостей, зарегистрированных в номере.
+         *         2) Общее количество мест в номере.
+         */
+        @Override
+        public int[] call() {
+<span class="fc" id="L83">            Iterator&lt;Room&gt; iterator = rooms.values().iterator();</span>
+<span class="fc" id="L84">            int numberOfGuests = 0;</span>
+<span class="fc" id="L85">            int numberOfBeds = 0;</span>
+
+<span class="fc bfc" id="L87" title="All 2 branches covered.">            while (iterator.hasNext()) {</span>
+<span class="fc" id="L88">                Room room = iterator.next();</span>
+<span class="fc" id="L89">                numberOfGuests += room.getNumberOfGuests();</span>
+<span class="fc" id="L90">                numberOfBeds += room.getRoomSize();</span>
+<span class="fc" id="L91">            }</span>
+
+<span class="fc" id="L93">            return new int[]{numberOfGuests, numberOfBeds};</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
